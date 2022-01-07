@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WordPress数据库数据导入到Fastadmin-CMS数据表</title>
+
+    <link href="public/css/jquery-ui.css" rel="stylesheet">
+    <!--z-tree插件-->
+    <link href="public/css/zTreeStyle.css" rel="stylesheet">
+    <!--顶部提示插件-->
+    <link href="public/css/overhang.min.css" rel="stylesheet">
+    <link href="public/css/custom.css" rel="stylesheet">
+    <!--拖拽插件-->
+
+    <script data-main="public/js/main-v1" src="public/js/require.js"></script>
+    <!-- todo 谨记：main.js 加载了两次当然里边代码执行两次  <script src="public/js/main.js"></script>-->
+</head>
+<body>
+
+<div class="custom-state-box">
+    <h2 class="demoHeaders">状态显示：<b style="color: red;">（版本一：WordPress数据库数据导入到Fastadmin-CMS数据表）</b><a href="javascript:;" id="backMenu">返回菜单</a></h2>
+    <div class="custom-state-container">
+        <ol>
+            <li>
+                <!--1、数据库连接配置 2、导入字段配置 3、导入栏目ID配置<i class="ui-state-highlight">&nbsp;&nbsp;&nbsp;&nbsp;</i>-->
+                <fieldset>
+                    <legend>配置状态</legend>
+                    <div id="statusgroup">
+                        <span>
+                            导出库状态：<i id="from-db-state" class="ui-state-error ui-corner-all custom-state-text">未测试</i>
+                            导入库状态：<i id="to-db-state" class="ui-state-error ui-corner-all custom-state-text">未测试</i>
+                            导出栏目：<i id="from-type-state" class="ui-state-error ui-corner-all custom-state-text">[0]未选择栏目</i>
+                            导入栏目：<i id="to-type-state" class="ui-state-error ui-corner-all custom-state-text">[0]未选择栏目</i>
+                        </span>
+                    </div>
+
+                </fieldset>
+                <!--<div class="custom-shade"></div>-->
+            </li>
+            <li>
+                <fieldset>
+                    <legend>导入进度</legend>
+                    <div id="progressbar"></div>
+                </fieldset>
+            </li>
+            <li>
+                <fieldset>
+                    <legend>控制面板</legend>
+                    <!--<button id="loadconfig-button" class="ui-button ui-corner-all ui-widget">加载当前配置</button>-->
+                    <div id="controlgroup">
+                        <label for="is-export-category">仅导入栏目数据</label>
+                        <input type="checkbox" name="is-export-images" id="is-export-category">
+
+                        <label for="remove-useless">清除占位useless数据</label>
+                        <input type="checkbox" name="remove-useless" id="remove-useless">
+
+                        <label for="archiveid-reset">文章id新增导入</label>
+                        <input type="checkbox" name="archiveid-reset" id="archiveid-reset">
+                    </div>
+
+                    <button id="start-button" class="ui-button ui-corner-all ui-widget">开始执行</button>
+                </fieldset>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<!-- 手风琴 -->
+<h2 class="demoHeaders">操作步骤：<span style="color: red;">注意每次使用先重置再保存！</span></h2>
+
+
+<div id="accordion">
+    <h3>步骤一：填写数据库配置</h3>
+    <div class="container one" style="height: 200px">
+        <div class="custom-form-box custom-left">
+            <h4>导出数据库配置（WordPress数据库配置）</h4>
+            <form class="cfg_form" id="from_cfg_form" name="from_cfg_form">
+                <ol>
+                    <li><label>数据库链接：</label><input type="text" name="dbhost" value="127.0.0.1" placeholder="localhost"> </li>
+                    <li><label>用户名：</label><input type="text" name="dbuser" value="root" placeholder="user"> </li>
+                    <li><label>密码：</label><input type="text" name="dbpwd" value="root" placeholder="password"> </li>
+                    <li><label>数据库名称：</label><input type="text" name="dbname" value="" placeholder="databasename"> </li>
+                    <li><label>数据表前缀：</label><input type="text" name="dbprefix" value="wp_" placeholder="wp_"> </li>
+                    <li><label>数据库编码：</label><input type="text" name="dblanguage" value="utf-8" placeholder="utf-8"> <span style="color: red;">注意编码！</span></li>
+                    <li><label></label><button id="from-cfg-save-button" class="ui-button ui-corner-all ui-widget" type="button">保存配置</button></li>
+                </ol>
+            </form>
+        </div>
+        <div class="custom-form-box custom-right">
+            <h4>导入数据库配置（Fastadmin-CMS）</h4>
+            <form class="cfg_form" id="to_cfg_form" name="to_cfg_form">
+                <ol>
+                    <li><label>数据库链接：</label><input type="text" name="dbhost" value="127.0.0.1" placeholder="localhost"> </li>
+                    <li><label>用户名：</label><input type="text" name="dbuser" value="root" placeholder="user"> </li>
+                    <li><label>密码：</label><input type="text" name="dbpwd" value="root" placeholder="password"> </li>
+                    <li><label>数据库名称：</label><input type="text" name="dbname" value="" placeholder="databasename"> </li>
+                    <li><label>数据表前缀：</label><input type="text" name="dbprefix" value="fa_" placeholder="fa_"> </li>
+                    <li><label>数据库编码：</label><input type="text" name="dblanguage" value="utf-8" placeholder="utf-8"> <span style="color: red;">注意编码！</span></li>
+                    <li><label></label><button id="to-cfg-save-button" class="ui-button ui-corner-all ui-widget" type="button">保存配置</button></li>
+                </ol>
+            </form>
+        </div>
+    </div>
+    <h3>步骤二：选择导出栏目ID</h3>
+    <div class="container five">
+        <div id="messageBox"></div>
+        <h4>
+            <button id="export-cfg-save-button" class="ui-button ui-corner-all ui-widget">保存导出栏目ID</button>
+            <button id="import-cfg-reset-from-button" class="ui-button ui-corner-all ui-widget">重置导出栏目</button>
+        </h4>
+        <div class="custom-form-box custom-left">
+            <h4>导出数据库栏目ID配置</h4>
+
+            <ul id="fromTree" class="ztree"></ul>
+        </div>
+
+    </div>
+    <h3>步骤三：选择导入栏目ID</h3>
+    <div class="container two">
+        <h4>
+            <button id="import-type-save-button" class="ui-button ui-corner-all ui-widget">保存导入栏目配置</button>
+            <button id="import-cfg-reset-to-button" class="ui-button ui-corner-all ui-widget">重置导入栏目</button>
+        </h4>
+        <div>
+            <h4>导入数据库栏目列表</h4>
+            <ul id="toTree" class="ztree custom-ztree"></ul>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

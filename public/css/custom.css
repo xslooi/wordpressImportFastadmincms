@@ -1,0 +1,183 @@
+@charset "UTF-8";
+/*此样式是用户自定义样式*/
+
+.custom-state-container{
+    position: relative;
+}
+
+/*状态栏*/
+.custom-shade{
+    position: absolute;
+    top: 25px;
+    width: 50%;
+    height: 50px;
+}
+
+#statusgroup {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.custom-state-text{
+    padding: 5px 10px;
+}
+
+/*进度条*/
+.ui-progressbar-value {
+    background: green;
+    font-size: 30px;
+    color: red;
+}
+
+/*操作步骤内容区*/
+.one{
+    height: 400px;
+}
+.two{
+    height: 500px;
+}
+.three{
+    height: 500px;
+}
+
+/*数据库配置样式*/
+.custom-form-box{
+    width: 49%;
+    border: 1px solid #ccc;
+}
+
+.custom-left{
+    float: left;
+}
+.custom-right{
+    float: right;
+}
+
+.cfg_form label{
+    display: inline-block;
+    width: 120px;
+}
+
+.cfg_form ol li{
+    margin-bottom: 6px;
+}
+
+
+/*=======================================================*/
+/*拖拽插件*/
+/*#list1, #list2, #list3 { width:350px; list-style-type:none; }*/
+/*#list1 li, #list2 li, #list3 li { float:left; padding:5px; width:100px; height:100px; }*/
+/*#list1 div, #list2 div, #list3 div { width:90px; height:50px; border:solid 1px black; background-color:#E0E0E0; text-align:center; padding-top:40px; }*/
+/*#list2, #list3 { float:right; }*/
+.placeHolder div { background-color:white !important; border:dashed 1px gray !important; }
+
+.to-field{
+    height: 37px;
+    overflow: hidden;
+    border: 1px solid red;
+    margin-bottom: 10px;
+    list-style: none;
+}
+
+.to-field li{
+    width: 200px;
+    height: 35px;
+    float: left;
+    line-height: 35px;
+    position: relative;
+}
+
+.to-field li i {
+    position: absolute;
+    right: 0;
+    padding: 0 6px;
+    color: #666;
+}
+
+.to-field li i:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.custom-left .to-field {
+    height: 350px;
+    padding: 0;
+    overflow: auto;
+}
+.custom-left .to-field li{
+    margin: 25px 25px 0;
+}
+
+
+.custom-right .to-field {
+    width: 202px;
+    padding: 0;
+}
+
+.custom-right label{
+    font-size: 16px;
+    font-weight: bold;
+}
+.to-field li div{
+    width:200px; height:35px; border:solid 1px black; background-color:#E0E0E0; text-align:center;
+}
+
+#import_fields_lists {
+    height: 350px;
+    overflow: auto;
+}
+
+#import_fields_lists li {
+    width: 33%;
+    float: left;
+}
+
+#relevance_field_lists {
+    border: 1px solid #ccc;
+}
+#relevance_field_lists li {
+    height: 50px;
+    border: 1px solid #ccc;
+    line-height: 50px;
+}
+#relevance_field_lists li b {
+    margin: 0 20px;
+    border: 1px solid #ccc;
+    padding: 0 17px;
+    width: 100px;
+    display: inline-block;
+}
+
+#relevance_field_lists li em {
+    margin: 0 20px;
+    border: 1px solid #ccc;
+    padding: 0 17px;
+    display: inline-block;
+    width: 100px;
+}
+
+.relevance_box {
+    height: 50px;
+    width: 1000px;
+    display: inline-block;
+    border: 1px solid green;
+    margin-left: 15px;
+}
+.relevance_attr {
+    display: none;
+}
+
+.attr_convert_coding {
+    display: inline-block;
+    border-right: 2px solid green;
+    padding-right: 10px;
+}
+
+.relevance_attr input {
+    border: 1px solid blue;
+    height: 30px;
+}
+
+.rele_select {
+    margin-right: 10px;
+}
